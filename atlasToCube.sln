@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{59D46239-640A-F2BB-5E2D-92BA1837C421}") = "atlasToCube", "Assembly-CSharp.csproj", "{382B021F-7748-581A-0D8C-882FD6CB32EF}"
+EndProject
+Project("{59D46239-640A-F2BB-5E2D-92BA1837C421}") = "atlasToCube", "Assembly-CSharp-Editor.csproj", "{DFDC74C3-B725-6ADC-BF4F-5E16A1A85F79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{382B021F-7748-581A-0D8C-882FD6CB32EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382B021F-7748-581A-0D8C-882FD6CB32EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382B021F-7748-581A-0D8C-882FD6CB32EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382B021F-7748-581A-0D8C-882FD6CB32EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFDC74C3-B725-6ADC-BF4F-5E16A1A85F79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFDC74C3-B725-6ADC-BF4F-5E16A1A85F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFDC74C3-B725-6ADC-BF4F-5E16A1A85F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFDC74C3-B725-6ADC-BF4F-5E16A1A85F79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+							GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

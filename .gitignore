@@ -1,0 +1,9 @@
+Temp/
+.DS_Store
+Library/*
+*.suo
+*.user
+*.pidb
+*.userprefs
+*.csproj
+Assets/data/
