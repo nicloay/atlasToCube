@@ -44,7 +44,6 @@ public class CubeAtlasUVManager : MonoBehaviour {
 
 	public void updateMesh ()
 	{
-		Debug.Log("update mesh"+Time.realtimeSinceStartup);
 		Mesh mesh = getMesh ();
       	Vector2[] uvs = mesh.uv;			
 		updateUVs(ref uvs,backIndexes,front);
@@ -77,6 +76,21 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		Vector2 botRight=new Vector2((x+1)*uvScaleX,(y+1)*uvScaleY);
 		Vector2 topRight=new Vector2((x+1)*uvScaleX,y*uvScaleY);
 		Vector2 topLeft=new Vector2(x*uvScaleX,y*uvScaleY);
+		
+		Vector2[] rotationArray=new Vector2[8];
+	 	rotationArray[0]=topLeft;
+		rotationArray[1]=topRight;		
+		rotationArray[2]=botRight;
+		rotationArray[3]=botLeft;
+		rotationArray[4]=topLeft;
+		rotationArray[5]=topRight;		
+		rotationArray[6]=botRight;
+		rotationArray[7]=botLeft;
+		
+		topLeft=rotationArray[uvPosition.rotation];
+		topRight=rotationArray[uvPosition.rotation+1];
+		botRight=rotationArray[uvPosition.rotation+2];
+		botLeft=rotationArray[uvPosition.rotation+3];
 		
 		uv[indexes[0]]=botLeft;
 		uv[indexes[1]]=botRight;
