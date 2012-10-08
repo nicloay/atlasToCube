@@ -2,18 +2,27 @@ using UnityEditor;
 using System.Collections;
 using UnityEngine;
 	
+
 [CustomEditor(typeof(CubeAtlasUVManager))]	
 class CubeAtlasUVEditor : Editor {
-	SerializedProperty[] faces=new SerializedProperty[6];
+	SerializedProperty[] UVPositions=new SerializedProperty[6];
+	SerializedProperty rowCount;
+	SerializedProperty columnCount;
+	
 	
 	
 	void OnEnable(){		
-		faces[0]=serializedObject.FindProperty("frontFacePosition");
-		faces[1]=serializedObject.FindProperty("backFacePosition");
-		faces[2]=serializedObject.FindProperty("leftFacePosition");
-		faces[3]=serializedObject.FindProperty("rightFacePosition");
-		faces[4]=serializedObject.FindProperty("topFacePosition");
-		faces[5]=serializedObject.FindProperty("bottomFacePosition");		
+		
+		UVPositions[0]=serializedObject.FindProperty("front");
+		UVPositions[1]=serializedObject.FindProperty("back");
+		UVPositions[2]=serializedObject.FindProperty("left");
+		UVPositions[3]=serializedObject.FindProperty("right");
+		UVPositions[4]=serializedObject.FindProperty("top");
+		UVPositions[5]=serializedObject.FindProperty("bottom");	
+		
+		
+		rowCount=serializedObject.FindProperty("rowCount");
+		columnCount=serializedObject.FindProperty("columnCount");
 	}
 	
 	
@@ -22,14 +31,18 @@ class CubeAtlasUVEditor : Editor {
 		CubeAtlasUVManager cubeUVManager=(CubeAtlasUVManager)target;		
 		int numberOfTiles=cubeUVManager.rowCount*cubeUVManager.columnCount-1;
 		
-		foreach (SerializedProperty face in faces)		
-			EditorGUILayout.IntSlider(face, 0, numberOfTiles);
+		EditorGUILayout.PropertyField(rowCount);
+		EditorGUILayout.PropertyField(columnCount);
 		
-		
-					
-		
-		serializedObject.ApplyModifiedProperties ();
-		base.OnInspectorGUI();
+		foreach(SerializedProperty uvPosition in UVPositions){
+			EditorGUILayout.LabelField("--------------------------------------------------------------");
+			EditorGUILayout.PrefixLabel(uvPosition.name);
+			EditorGUILayout.IntSlider(uvPosition.FindPropertyRelative("position"),0,numberOfTiles);
+			EditorGUILayout.IntSlider(uvPosition.FindPropertyRelative("rotation"),0,3);			
+		}		
+		serializedObject.ApplyModifiedProperties ();		
+		CubeAtlasUVManager cm=(CubeAtlasUVManager)target;
+		cm.updateMesh();
 	}
 	
 }

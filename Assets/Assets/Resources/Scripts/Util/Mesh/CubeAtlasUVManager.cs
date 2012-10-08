@@ -8,13 +8,14 @@ public class CubeAtlasUVManager : MonoBehaviour {
 	
 	public int rowCount=4;
 	public int columnCount=4;
-
-	public int frontFacePosition=0;
-	public int backFacePosition=0;
-	public int leftFacePosition=0;
-	public int rightFacePosition=0;
-	public int topFacePosition=0;
-	public int bottomFacePosition=0;
+	
+	public UVPosition front=new UVPosition(0,0);
+	public UVPosition back=new UVPosition(0,0);
+	public UVPosition left=new UVPosition(0,0);
+	public UVPosition right=new UVPosition(0,0);
+	public UVPosition top=new UVPosition(0,0);
+	public UVPosition bottom=new UVPosition(0,0);
+	
 	
 	
 	public static int[] backIndexes=new int[]{1,0,3,3,0,2};
@@ -38,20 +39,40 @@ public class CubeAtlasUVManager : MonoBehaviour {
 	
 	
 	void Start() {
-	 	Mesh mesh = gameObject.GetComponent<MeshFilter>().sharedMesh;
-        Vector2[] uvs = mesh.uv;			
-		updateMesh(ref uvs,backIndexes,frontFacePosition);
-		updateMesh(ref uvs,topIndexes,topFacePosition);
-		updateMesh(ref uvs,frontIndexes,frontFacePosition);
-		updateMesh(ref uvs,bottomIndexes,bottomFacePosition);
-		updateMesh(ref uvs,leftIndexes,leftFacePosition);
-		updateMesh(ref uvs,rightIndexes,rightFacePosition);
+		updateMesh ();
+	}
+
+	public void updateMesh ()
+	{
+		Debug.Log("update mesh"+Time.realtimeSinceStartup);
+		Mesh mesh = getMesh ();
+      	Vector2[] uvs = mesh.uv;			
+		updateUVs(ref uvs,backIndexes,front);
+		updateUVs(ref uvs,topIndexes,top);
+		updateUVs(ref uvs,frontIndexes,front);
+		updateUVs(ref uvs,bottomIndexes,bottom);
+		updateUVs(ref uvs,leftIndexes,left);
+		updateUVs(ref uvs,rightIndexes,right);
 		mesh.uv=uvs;
 	}
+
+	Mesh getMesh ()
+	{
+		Mesh result=new Mesh();
+		if (Application.isPlaying){
+			result = gameObject.GetComponent<MeshFilter>().mesh;
+		}else{
+			result=gameObject.GetComponent<MeshFilter>().sharedMesh;			
+		}			
+		return result;
+	}
 	
-	private void updateMesh(ref Vector2[] uv,int[] indexes, int atlasPosition){
-		int y=rowCount - atlasPosition/columnCount-1;		
-		int x=atlasPosition%columnCount;		
+	
+	
+	
+	private void updateUVs(ref Vector2[] uv,int[] indexes, UVPosition uvPosition){
+		int y=rowCount - uvPosition.position/columnCount-1;		
+		int x=uvPosition.position%columnCount;		
 		Vector2 botLeft=new Vector2(x*uvScaleX,(y+1)*uvScaleY);
 		Vector2 botRight=new Vector2((x+1)*uvScaleX,(y+1)*uvScaleY);
 		Vector2 topRight=new Vector2((x+1)*uvScaleX,y*uvScaleY);
@@ -66,32 +87,10 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		
 	}
 	
-	
-	
-	
 	void Update(){
 		if (!Application.isPlaying)	{
-			Start();	
+			updateMesh();	
 		}
-	}
-	
-	
-	void __debugShowVerteces(){	
-        Mesh mesh = transform.GetComponent<MeshFilter>().mesh;
-        Vector3[] vertices = mesh.vertices;
-        int i = 0;
-        while (i < vertices.Length) {
-            i++;
-        }
-		
-		int[] triangles=mesh.triangles;
-		for (int v=0;v<triangles.Length;v++){
-			Debug.Log(v+"  =>"+triangles[v]);	
-		}		        
-    }
-	
-	public GameObject get(){
-		return this.gameObject;	
 	}
 	
 }
