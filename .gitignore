@@ -7,3 +7,5 @@ Library/*
 *.userprefs
 *.csproj
 Assets/data/
+Assets/AssetStoreTools/
+Assets/AssetStoreTools.meta
