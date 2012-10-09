@@ -16,14 +16,12 @@ public class CubeAtlasUVManager : MonoBehaviour {
 	public UVPosition top=new UVPosition(0,0);
 	public UVPosition bottom=new UVPosition(0,0);
 	
-	
-	
 	public static int[] backIndexes=new int[]{1,0,3,3,0,2};
 	public static int[] topIndexes=new int[]{9,8,5,5,8,4};	
 	public static int[] frontIndexes=new int[]{11,10,7,7,10,6};
 	public static int[] bottomIndexes=new int[]{14,12,13,13,12,15};
 	public static int[] leftIndexes=new int[]{18,16,17,17,16,19};
-	public static int[] rightIndexes=new int[]{22,20,21,21,20,23};
+	public static int[] rightIndexes=new int[]{22,20,21,21,20,23};	
 	
 	public float uvScaleX{
 		get{
@@ -37,6 +35,17 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		}
 	}
 	
+	public void randomizeFaces(int atlasIdLimit){
+		UVPosition[] positions=new UVPosition[]{front,back,left,right,top,bottom};
+		for (int i=0;i<positions.Length;i++){		
+			int face=Random.Range(0,atlasIdLimit);
+			int rotation=Random.Range(0,4);			
+			positions[i].position=face;
+			positions[i].rotation=rotation;			
+		}		
+		updateMesh();
+		
+	}
 	
 	void Start() {
 		updateMesh ();
