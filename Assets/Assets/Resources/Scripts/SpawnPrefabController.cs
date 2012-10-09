@@ -12,7 +12,6 @@ public class SpawnPrefabController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		Debug.Log("wtf");
 		StartCoroutine("startSpawning");
 	}
 
@@ -22,7 +21,6 @@ public class SpawnPrefabController : MonoBehaviour {
 			parentGO=new GameObject("GeneratedObjects");			
 		}
 				
-		Debug.Log("im here");
 		for (int i=0;i<numberOfObjects;i++){
 			Vector3 spawnPosition=transform.position;			
 			float rnd=Random.Range(-rndFactor,rndFactor);
