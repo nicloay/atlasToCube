@@ -61,17 +61,6 @@ class CubeAtlasUVEditor : Editor {
 		
 	}
 
-	
-
-	public void showIntSlider (string label, ref int intFrom, int intTo,ref int actualIntValue)
-	{
-		int newIntValue=EditorGUILayout.IntSlider(label,actualIntValue,intFrom,intTo);
-		if (newIntValue!=actualIntValue){
-			actualIntValue=newIntValue;
-			updateTargetMesh();
-		}
-	}
-
 	void updateTargetMesh ()
 	{
 		CubeAtlasUVManager cm=(CubeAtlasUVManager)target;
