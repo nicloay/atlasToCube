@@ -47,16 +47,6 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		}
 	}
 
-	public int columnCount {
-		get {
-			return this._columnCount;
-		}
-		set {
-			broadcastPropetyChange("columnCount");
-			_columnCount = value;
-		}
-	}
-
 	public UVPosition front {
 		get {
 			return this._front;
@@ -87,18 +77,7 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		}
 	}
 
-	public int rowCount {
-		get {
-			if (this._rowCount==null)
-				this._rowCount=4;
-			return this._rowCount;
-		}
-		set {
-			broadcastPropetyChange("RowCount");
-			_rowCount = value;
-		}
-	}
-
+	
 	public UVPosition top {
 		get {
 			return this._top;
@@ -108,6 +87,36 @@ public class CubeAtlasUVManager : MonoBehaviour {
 			_top = value;
 		}
 	}	
+	
+	public int rowCount {
+		get {			
+			return this._rowCount;
+		}
+		set {
+			if (value<=0){
+				Debug.LogWarning("rowCount cannot be less than 1, assign 1 to it");
+				value=1;
+			}
+			
+			broadcastPropetyChange("RowCount");
+			_rowCount = value;
+		}
+	}
+	
+	public int columnCount {
+		get {
+			return this._columnCount;
+		}
+		set {
+			if (value<=0){
+				Debug.LogWarning("columnCount cannot be less than 1, assign 1 to it");
+				value=1;
+			}			
+			broadcastPropetyChange("columnCount");
+			_columnCount = value;
+		}
+	}
+
 	public static int[] backIndexes=new int[]{1,0,3,3,0,2};
 	public static int[] topIndexes=new int[]{9,8,5,5,8,4};	
 	public static int[] frontIndexes=new int[]{11,10,7,7,10,6};
