@@ -16,7 +16,26 @@ class CubeAtlasUVEditor : Editor {
 		UVPositions.Add("left",cm.left);
 		UVPositions.Add("right",cm.right);
 		UVPositions.Add("top",cm.top);
-		UVPositions.Add("botoom",cm.bottom);		
+		UVPositions.Add("botoom",cm.bottom);	
+		
+		
+		createMeshIfNull();
+	}
+
+	void createMeshIfNull ()
+	{
+		
+		CubeAtlasUVManager cm=(CubeAtlasUVManager)target;
+		if (cm.gameObject.GetComponent<MeshFilter>().sharedMesh ==null ){
+			GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);		
+			Mesh newMesh= cloneMesh(cube.GetComponent<MeshFilter>().sharedMesh);
+			cm.gameObject.GetComponent<MeshFilter>().sharedMesh=newMesh;
+			
+			DestroyImmediate(cube);			
+			
+			AssetDatabase.CreateAsset(newMesh, AssetDatabase.GetAssetPath(target).Replace("prefab","mesh.asset"));
+			AssetDatabase.SaveAssets();
+		}
 	}
 	
 	
@@ -80,21 +99,28 @@ class CubeAtlasUVEditor : Editor {
 	
 	
 	
-	private void instantiateMesh(){		
+	private Mesh  instantiateMesh(){		
 		CubeAtlasUVManager cam=(CubeAtlasUVManager)target;
 		GameObject gameObject = cam.gameObject;
 		MeshFilter mf=gameObject.GetComponent<MeshFilter>();
 		Mesh sharedMesh=mf.sharedMesh;
-		if (sharedMesh!=null){
-			Mesh m=new Mesh();	
-			m.vertices=sharedMesh.vertices;
-			m.uv=sharedMesh.uv;
-			m.triangles=sharedMesh.triangles;
-			m.normals=sharedMesh.normals;
-			m.tangents=sharedMesh.tangents;
-			m.name=sharedMesh.name+" Instance";
+		if (sharedMesh!=null){			
+			Mesh m= cloneMesh(sharedMesh);
 			mf.sharedMesh=m;
+			return m;
 		}
-		
+		return sharedMesh;
+	}
+
+	Mesh cloneMesh (Mesh sharedMesh)
+	{
+		Mesh m=new Mesh();	
+		m.vertices=sharedMesh.vertices;
+		m.uv=sharedMesh.uv;
+		m.triangles=sharedMesh.triangles;
+		m.normals=sharedMesh.normals;
+		m.tangents=sharedMesh.tangents;
+		m.name=sharedMesh.name+" Instance";
+		return m;
 	}
 }
