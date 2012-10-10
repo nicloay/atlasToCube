@@ -161,12 +161,12 @@ public class CubeAtlasUVManager : MonoBehaviour {
 	{
 		Mesh mesh = getMesh ();
       	Vector2[] uvs = mesh.uv;			
-		updateUVs(ref uvs,backIndexes,_front);
-		updateUVs(ref uvs,topIndexes,_top);
-		updateUVs(ref uvs,frontIndexes,_front);
-		updateUVs(ref uvs,bottomIndexes,_bottom);
-		updateUVs(ref uvs,leftIndexes,_left);
-		updateUVs(ref uvs,rightIndexes,_right);
+		updateUVs(ref uvs,backIndexes,back);
+		updateUVs(ref uvs,topIndexes,top);
+		updateUVs(ref uvs,frontIndexes,front);
+		updateUVs(ref uvs,bottomIndexes,bottom);
+		updateUVs(ref uvs,leftIndexes,left);
+		updateUVs(ref uvs,rightIndexes,right);
 		mesh.uv=uvs;
 	}
 
