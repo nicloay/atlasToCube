@@ -1,21 +1,113 @@
 using UnityEngine;
 using System.Collections;
 
+public delegate void CubeAtlasUVManagerPropertyChange(string propertyName);
 
 //works only with cube;
 [ExecuteInEditMode]
 public class CubeAtlasUVManager : MonoBehaviour {
 	
-	public int rowCount=4;
-	public int columnCount=4;
+	public CubeAtlasUVManagerPropertyChange onCubeAtlasUVManagerPropertyChange;
 	
-	public UVPosition front=new UVPosition(0,0);
-	public UVPosition back=new UVPosition(0,0);
-	public UVPosition left=new UVPosition(0,0);
-	public UVPosition right=new UVPosition(0,0);
-	public UVPosition top=new UVPosition(0,0);
-	public UVPosition bottom=new UVPosition(0,0);
+	[SerializeField]
+	private int _rowCount=4;
+	[SerializeField]
+	private int _columnCount=4;
 	
+	[SerializeField]
+	private UVPosition _front=new UVPosition(0,0);
+	[SerializeField]
+	private UVPosition _back=new UVPosition(0,0);
+	[SerializeField]
+	private UVPosition _left=new UVPosition(0,0);
+	[SerializeField]
+	private UVPosition _right=new UVPosition(0,0);
+	[SerializeField]
+	private UVPosition _top=new UVPosition(0,0);
+	[SerializeField]
+	private UVPosition _bottom=new UVPosition(0,0);
+
+	public UVPosition back {
+		get {
+			return this._back;
+		}
+		set {			
+			value.onUVPositionPropertyChange +=broadcastPropetyChange;
+			_back = value;
+		}
+	}
+
+	public UVPosition bottom {
+		get {
+			return this._bottom;
+		}
+		set {
+			value.onUVPositionPropertyChange+=broadcastPropetyChange;
+			_bottom = value;
+		}
+	}
+
+	public int columnCount {
+		get {
+			return this._columnCount;
+		}
+		set {
+			broadcastPropetyChange("columnCount");
+			_columnCount = value;
+		}
+	}
+
+	public UVPosition front {
+		get {
+			return this._front;
+		}
+		set {
+			value.onUVPositionPropertyChange+=broadcastPropetyChange;
+			_front = value;
+		}
+	}
+
+	public UVPosition left {
+		get {
+			return this._left;
+		}
+		set {
+			value.onUVPositionPropertyChange+=broadcastPropetyChange;
+			_left = value;
+		}
+	}
+
+	public UVPosition right {
+		get {
+			return this._right;
+		}
+		set {
+			value.onUVPositionPropertyChange+=broadcastPropetyChange;
+			_right = value;
+		}
+	}
+
+	public int rowCount {
+		get {
+			if (this._rowCount==null)
+				this._rowCount=4;
+			return this._rowCount;
+		}
+		set {
+			broadcastPropetyChange("RowCount");
+			_rowCount = value;
+		}
+	}
+
+	public UVPosition top {
+		get {
+			return this._top;
+		}
+		set {
+			value.onUVPositionPropertyChange+=broadcastPropetyChange;
+			_top = value;
+		}
+	}	
 	public static int[] backIndexes=new int[]{1,0,3,3,0,2};
 	public static int[] topIndexes=new int[]{9,8,5,5,8,4};	
 	public static int[] frontIndexes=new int[]{11,10,7,7,10,6};
@@ -25,18 +117,22 @@ public class CubeAtlasUVManager : MonoBehaviour {
 	
 	public float uvScaleX{
 		get{
-			return 1f/columnCount;
+			return 1f/_columnCount;
 		}
 	}
 	
 	public float uvScaleY{
 		get{
-			return 1f/rowCount;			
+			return 1f/_rowCount;			
 		}
 	}
 	
+	void Awake(){
+		onCubeAtlasUVManagerPropertyChange+=onPropertyChangeListener;		
+	}
+	
 	public void randomizeFaces(int atlasIdLimit){
-		UVPosition[] positions=new UVPosition[]{front,back,left,right,top,bottom};
+		UVPosition[] positions=new UVPosition[]{_front,_back,_left,_right,_top,_bottom};
 		for (int i=0;i<positions.Length;i++){		
 			int face=Random.Range(0,atlasIdLimit);
 			int rotation=Random.Range(0,4);			
@@ -46,21 +142,22 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		updateMesh();
 		
 	}
-	
-	void Start() {
-		updateMesh ();
+
+	private void onPropertyChangeListener(string propertyName){
+		updateMesh();	
 	}
+	
 
 	public void updateMesh ()
 	{
 		Mesh mesh = getMesh ();
       	Vector2[] uvs = mesh.uv;			
-		updateUVs(ref uvs,backIndexes,front);
-		updateUVs(ref uvs,topIndexes,top);
-		updateUVs(ref uvs,frontIndexes,front);
-		updateUVs(ref uvs,bottomIndexes,bottom);
-		updateUVs(ref uvs,leftIndexes,left);
-		updateUVs(ref uvs,rightIndexes,right);
+		updateUVs(ref uvs,backIndexes,_front);
+		updateUVs(ref uvs,topIndexes,_top);
+		updateUVs(ref uvs,frontIndexes,_front);
+		updateUVs(ref uvs,bottomIndexes,_bottom);
+		updateUVs(ref uvs,leftIndexes,_left);
+		updateUVs(ref uvs,rightIndexes,_right);
 		mesh.uv=uvs;
 	}
 
@@ -110,10 +207,10 @@ public class CubeAtlasUVManager : MonoBehaviour {
 		
 	}
 	
-	void Update(){
-		if (!Application.isPlaying)	{
-			updateMesh();	
-		}
+	
+	void broadcastPropetyChange(string propertyName){
+		if(onCubeAtlasUVManagerPropertyChange!=null)
+			onCubeAtlasUVManagerPropertyChange(propertyName);
 	}
 	
 }
