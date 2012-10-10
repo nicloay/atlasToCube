@@ -91,6 +91,7 @@ class CubeAtlasUVEditor : Editor {
 			m.uv=sharedMesh.uv;
 			m.triangles=sharedMesh.triangles;
 			m.normals=sharedMesh.normals;
+			m.tangents=sharedMesh.tangents;
 			m.name=sharedMesh.name+" Instance";
 			mf.sharedMesh=m;
 		}
