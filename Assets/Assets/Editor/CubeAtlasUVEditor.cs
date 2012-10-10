@@ -16,7 +16,7 @@ class CubeAtlasUVEditor : Editor {
 		UVPositions.Add("left",cm.left);
 		UVPositions.Add("right",cm.right);
 		UVPositions.Add("top",cm.top);
-		UVPositions.Add("botoom",cm.bottom);	
+		UVPositions.Add("bottom",cm.bottom);	
 		
 		
 		createMeshIfNull();
