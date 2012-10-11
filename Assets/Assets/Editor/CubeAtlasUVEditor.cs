@@ -65,13 +65,13 @@ class CubeAtlasUVEditor : Editor {
 			
 			EditorGUILayout.LabelField("--------------------------------------------------------------");
 			EditorGUILayout.PrefixLabel(uvPosition.Key);			
-			int newPosition=EditorGUILayout.IntSlider(uvPosition.Key,uvPosition.Value.position,0,numberOfTiles);
+			int newPosition=EditorGUILayout.IntSlider("position",uvPosition.Value.position,0,numberOfTiles);
 			if (newPosition!=uvPosition.Value.position){
 				uvPosition.Value.position=newPosition;
 				updateTargetMesh();					
 			}
 			
-			int newRotation=EditorGUILayout.IntSlider(uvPosition.Key,uvPosition.Value.rotation,0,3);
+			int newRotation=EditorGUILayout.IntSlider("rotation",uvPosition.Value.rotation,0,3);
 			if (newRotation!=uvPosition.Value.rotation){
 				uvPosition.Value.rotation=newRotation;
 				updateTargetMesh();				
